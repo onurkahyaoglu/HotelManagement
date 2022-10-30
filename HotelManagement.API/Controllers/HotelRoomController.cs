@@ -80,5 +80,19 @@ namespace HotelManagement.API.Controllers
             string res = cmp.BookHotelRoom(obj);
             return res;
         }
+        [HttpPost]
+        public string BookingCancelationWithPassive([FromBody] int rezId)
+        {
+            Components cmp = new Components();
+            string res = cmp.BookingCancelationWithPassive(rezId);
+            return res;
+        }
+        [HttpPost]
+        public string BookingCancelationWithRemove([FromBody] int rezId)
+        {
+            Components cmp = new Components();
+            string res = cmp.BookingCancelationWithRemove(rezId);
+            return res;
+        }
     }
 }

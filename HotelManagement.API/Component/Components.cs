@@ -153,6 +153,66 @@ namespace HotelManagement.API.Component
             }
             return retMessage;
         }
+        public string BookingCancelationWithPassive(int bookingId)
+        {
+            string retMessage = "";
+            HotelRoomBooking booking = GetAllHotelRoomBooking().Where(_ => _.inId == bookingId).FirstOrDefault();
+            if (booking == null)
+            {
+                retMessage += "Rezervasyon kaydınız bulunamadı. ";
+            }
+            else
+            {
+                //Rezervasyonu pasife alıyoruz. Booking aşamasında aktif rezervasyon oda sayılarına baktığımız için silmemize gerek kalmıyor.
+                booking.inActive = 0;
+                retMessage += "Rezervasyon pasif. ";
+                List<HotelRoomBookingGuest> guestList = GetAllHotelRoomBookingGuest().Where(_ => _.inBookingId == bookingId).ToList();
+                if (guestList.Count == 0)
+                {
+                    retMessage += "Rezervasyona ait misafir bilgisi bulunamadı. ";
+                }
+                else
+                {
+                    foreach (var item in guestList)
+                    {
+                        //Rezerasvyondaki kişi bilgilerini pasife alıyoruz. Daha sonra takip edilip ihtiyaç duyulması durumunda kullanılabilmesi için silmek yerine pasife alıyoruz.
+                        item.inActive = 0;
+                    }
+                    retMessage += "Rezervasyonda bulunan misafirler pasif. ";
+                }
+            }
+            return retMessage;
+        }
+        public string BookingCancelationWithRemove(int bookingId)
+        {
+            string retMessage = "";
+            HotelRoomBooking booking = GetAllHotelRoomBooking().Where(_ => _.inId == bookingId).FirstOrDefault();
+            if (booking == null)
+            {
+                retMessage += "Rezervasyon kaydınız bulunamadı. ";
+            }
+            else
+            {
+                List<HotelRoomBooking> bookingList = GetAllHotelRoomBooking();
+                bookingList.Remove(booking);
+                retMessage += "Rezervasyon silindi. ";
+                List<HotelRoomBookingGuest> guestList = GetAllHotelRoomBookingGuest().Where(_ => _.inBookingId == bookingId).ToList();
+                if (guestList.Count == 0)
+                {
+                    retMessage += "Rezervasyona ait misafir bilgisi bulunamadı. ";
+                }
+                else
+                {
+                    List<HotelRoomBookingGuest> guestAllList = GetAllHotelRoomBookingGuest();
+                    foreach (var item in guestList)
+                    {
+                        guestAllList.Remove(item);
+                    }
+                    retMessage += "Rezervasyonda bulunan misafirler silindi. ";
+                }
+            }
+            return retMessage;
+        }
         #endregion
     }
 }
