@@ -45,5 +45,12 @@ namespace HotelManagement.API.Controllers
             List<HotelRoom> res = cmp.HotelRoomSearchByHotelId(hotelId);
             return res;
         }
+        [HttpPost]
+        public List<HotelRoom> AddHotelRoom([FromBody] HotelRoom obj)
+        {
+            Components cmp = new Components();
+            List<HotelRoom> res = cmp.AddHotelRoom(obj);
+            return res;
+        }
     }
 }

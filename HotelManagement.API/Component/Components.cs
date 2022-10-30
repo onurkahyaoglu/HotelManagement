@@ -73,7 +73,13 @@ namespace HotelManagement.API.Component
             List<HotelRoom> res = GetAllHotelRooms().Where(_ => _.inHotelId == hotelId).ToList();
             return res;
         }
-
+        //Oda ekler oda listesi döner
+        public List<HotelRoom> AddHotelRoom(HotelRoom obj)
+        {
+            List<HotelRoom> hotelRooms = GetAllHotelRooms();
+            hotelRooms.Add(obj);
+            return hotelRooms;
+        }
         #endregion
     }
 }
