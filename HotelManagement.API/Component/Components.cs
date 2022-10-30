@@ -80,6 +80,18 @@ namespace HotelManagement.API.Component
             hotelRooms.Add(obj);
             return hotelRooms;
         }
+        //Rezervasyon Listesini döner
+        public List<HotelRoomBooking> GetAllHotelRoomBooking()
+        {
+            List<HotelRoomBooking> list = FakeHotelRoomBookingData.GetHotelRoomBooking(3);
+            return list;
+        }
+        //Rezervasyon misafir listesini döner
+        public List<HotelRoomBookingGuest> GetAllHotelRoomBookingGuest()
+        {
+            List<HotelRoomBookingGuest> list = FakeHotelRoomBookingGuestData.GetHotelRoomBookingGuest(12);
+            return list;
+        }
         #endregion
     }
 }
