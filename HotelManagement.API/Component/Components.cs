@@ -112,6 +112,47 @@ namespace HotelManagement.API.Component
             List<HotelRoomBookingGuest> list = FakeHotelRoomBookingGuestData.GetHotelRoomBookingGuest(12);
             return list;
         }
+        //Rezervasyon yapar sonuç bilgisi döner
+        public string BookHotelRoom(ReservationModel obj)
+        {
+            string retMessage = "";
+            List<HotelRoomBooking> bookingList = GetAllHotelRoomBooking();
+            List<HotelRoomBookingGuest> guestList = GetAllHotelRoomBookingGuest();
+            List<Hotel> hotelList = GetAllHotels();
+            List<HotelRoom> roomList = GetAllHotelRooms();
+            bool checkHotel = hotelList.Any(_ => _.inId == obj.book.inHotelId && _.inActive == 1);
+            bool checkRoom = roomList.Any(_ => _.inId == obj.book.inRoomId && _.inActive == 1);
+            bool checkHotelRoom = roomList.Any(_ => _.inHotelId == obj.book.inHotelId && _.inId == obj.book.inRoomId && _.inActive == 1);
+            int roomAvailableCount = HotelRoomAvailabilityCount(obj.book.inRoomId);
+            int roomCapacity = HotelRoomSearchById(obj.book.inRoomId).inRoomCapacity;
+            if (checkHotel == false)
+            {
+                retMessage = "Belirttiğiniz otel bulunamadı.";
+            }
+            else if (checkRoom == false)
+            {
+                retMessage = "Belirttiğiniz oda bulunamadı.";
+            }
+            else if (checkHotelRoom == false)
+            {
+                retMessage = "Belirttiğiniz otel de belirttiğiniz oda bulunamadı.";
+            }
+            else if (roomAvailableCount <= 0)
+            {
+                retMessage = "Yeterli sayıda oda bulunamadı.";
+            }
+            else if (roomCapacity < obj.guest.Count)
+            {
+                retMessage = "Oda kapasitesi rezervasyon için yeterli değil.";
+            }
+            else
+            {
+                bookingList.Add(obj.book);
+                guestList.AddRange(obj.guest);
+                retMessage = "Rezervasyonunuz başarıyla oluşturuldu. Rezervasyon id niz " + obj.book.inId + " şeklindedir. Rezervasyon güncelleme/iptal işlemeri için bu numarayı kullanabilirsiniz.";
+            }
+            return retMessage;
+        }
         #endregion
     }
 }

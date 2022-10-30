@@ -73,5 +73,12 @@ namespace HotelManagement.API.Controllers
             int res = cmp.HotelRoomAvailabilityCount(roomId);
             return res;
         }
+        [HttpPost]
+        public string BookHotelRoom([FromBody] ReservationModel obj)
+        {
+            Components cmp = new Components();
+            string res = cmp.BookHotelRoom(obj);
+            return res;
+        }
     }
 }
