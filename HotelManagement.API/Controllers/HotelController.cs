@@ -21,7 +21,7 @@ namespace HotelManagement.API.Controllers
         public Hotel HotelSearchById(int id)
         {
             Components cmp = new Components();
-            Hotel res = cmp.GetAllHotels().Where(_ => _.inId == id).FirstOrDefault();
+            Hotel res = cmp.HotelSearchById(id);
             return res;
         }
 
@@ -29,14 +29,14 @@ namespace HotelManagement.API.Controllers
         public Hotel HotelSearchByName(string name)
         {
             Components cmp = new Components();
-            Hotel res = cmp.GetAllHotels().Where(_ => _.stHotelName.Contains(name)).FirstOrDefault();
+            Hotel res = cmp.HotelSearchByName(name);
             return res;
         }
         [HttpGet("{name}")]
         public List<Hotel> HotelsSearchByName(string name)
         {
             Components cmp = new Components();
-            List<Hotel> res = cmp.GetAllHotels().Where(_ => _.stHotelName.Contains(name)).ToList();
+            List<Hotel> res = cmp.HotelsSearchByName(name);
             return res;
         }
         [HttpPost]
