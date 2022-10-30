@@ -66,5 +66,12 @@ namespace HotelManagement.API.Controllers
             List<HotelRoomBookingGuest> list = cmp.GetAllHotelRoomBookingGuest();
             return list;
         }
+        [HttpGet]
+        public int HotelRoomAvailabilityCount(int roomId)
+        {
+            Components cmp = new Components();
+            int res = cmp.HotelRoomAvailabilityCount(roomId);
+            return res;
+        }
     }
 }

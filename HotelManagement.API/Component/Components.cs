@@ -80,6 +80,26 @@ namespace HotelManagement.API.Component
             hotelRooms.Add(obj);
             return hotelRooms;
         }
+
+        //Müsait oda sayısını döner
+        public int HotelRoomAvailabilityCount(int roomId)
+        {
+            int roomAvailableCount = 0;
+            HotelRoom hotelRoom = HotelRoomSearchById(roomId);
+            int totalRoomCount = 0;
+            if (hotelRoom != null)
+            {
+                totalRoomCount = hotelRoom.inCount;
+            }
+            int activeResRoomCount = GetAllHotelRoomBooking().Where(_ => _.inRoomId == roomId && _.inActive == 1).Count();
+
+            roomAvailableCount = totalRoomCount - activeResRoomCount;
+
+            return roomAvailableCount;
+        }
+        #endregion
+
+        #region HotelRoomBooking
         //Rezervasyon Listesini döner
         public List<HotelRoomBooking> GetAllHotelRoomBooking()
         {
