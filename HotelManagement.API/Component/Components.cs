@@ -11,5 +11,12 @@ namespace HotelManagement.API.Component
             List<Hotel> list = FakeHotelData.GetHotels(10);
             return list;
         }
+        //Otel ekler otel listesi döner
+        public List<Hotel> AddHotel(Hotel obj)
+        {
+            List<Hotel> hotels = GetAllHotels();
+            hotels.Add(obj);
+            return hotels;
+        }
     }
 }
