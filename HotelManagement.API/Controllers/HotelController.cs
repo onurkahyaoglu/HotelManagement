@@ -39,5 +39,12 @@ namespace HotelManagement.API.Controllers
             List<Hotel> res = cmp.GetAllHotels().Where(_ => _.stHotelName.Contains(name)).ToList();
             return res;
         }
+        [HttpPost]
+        public List<Hotel> AddHotel([FromBody] Hotel obj)
+        {
+            Components cmp = new Components();
+            List<Hotel> res = cmp.AddHotel(obj);
+            return res;
+        }
     }
 }
