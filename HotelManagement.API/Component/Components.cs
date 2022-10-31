@@ -124,7 +124,14 @@ namespace HotelManagement.API.Component
             bool checkRoom = roomList.Any(_ => _.inId == obj.book.inRoomId && _.inActive == 1);
             bool checkHotelRoom = roomList.Any(_ => _.inHotelId == obj.book.inHotelId && _.inId == obj.book.inRoomId && _.inActive == 1);
             int roomAvailableCount = HotelRoomAvailabilityCount(obj.book.inRoomId);
-            int roomCapacity = HotelRoomSearchById(obj.book.inRoomId).inRoomCapacity;
+            HotelRoom hroom = HotelRoomSearchById(obj.book.inRoomId);
+            int roomCapacity = 0;
+
+            if (hroom != null)
+            {
+                roomCapacity = hroom.inRoomCapacity;
+
+            }
             if (checkHotel == false)
             {
                 retMessage = "Belirttiğiniz otel bulunamadı.";
